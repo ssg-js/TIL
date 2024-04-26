@@ -1,0 +1,11 @@
+# npm install 에러
+
+예전에 과제 테스트를 쳤던 프로젝트를 다시 풀어보고자 클론 받은 후 npm install을 하려다 보니 오류가 생겼다. 해결하는 과정에서 배울 게 있을 것 같아서 기록해보려고 한다.
+
+오류 해결 과정은 
+
+![](C:\Users\likem\AppData\Roaming\marktext\images\2024-04-27-00-49-03-image.png)
+
+해당 오류 정보에서는 msw "1.2.1" 을 설치하는 도중에 typescript "5.1.6" 에서 문제가 발생했다. 
+
+
