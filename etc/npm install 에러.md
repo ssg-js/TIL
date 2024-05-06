@@ -4,7 +4,7 @@
 
 오류 해결 과정은 
 
-![](C:\Users\likem\AppData\Roaming\marktext\images\2024-04-27-00-49-03-image.png)
+![](npm%20install%20에러_assets/2024-04-27-00-59-15-image.png)
 
 해당 오류 정보에서는 msw "1.2.1" 을 설치하는 도중에 typescript "5.1.6" 에서 문제가 발생했다. 
 
