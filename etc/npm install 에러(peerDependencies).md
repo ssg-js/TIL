@@ -10,9 +10,7 @@
 
 난 그래서 typescript를 강제로 설치하면 되지 않을까 생각했지만, 그래도 이를 계기로 에러 상황에 대해 공부해보려고 한다.
 
-
-
-🛠 이는 2021년 2월 출시된 npm 7버전부터 **peerDependencies를 자동으로 설치하는 기능** 때문이다.
+📕 이는 2021년 2월 출시된 npm 7버전부터 **peerDependencies를 자동으로 설치하는 기능** 때문이다.
 
 > ### Peer dependencies
 > 
@@ -32,15 +30,12 @@
 
 출처 : [npm 7 is now generally available! - The GitHub Blog](https://github.blog/2021-02-02-npm-7-is-now-generally-available/)
 
-
-
 위 글을 보면 npm 4-6버전에서는 버전이 맞지 않을 경우 경고만 표기하고 에러 없이 설치했다고 되어있다. 하지만 npm 7버전은 업스트림(?) 종속성 충돌이 발생하면 설치를 차단한다.
 
 이 문제는 에러 메시지 중후반에 나와있는 `--force` 나 `--legacy-peer-deps` 속성을 이용해 설치하면 해결할 수 있다.
 
-둘 중에 뭐가 나은지는 의견이 분분한데 한국 블로그에선 대부분 `--force`를 사용하고 있고, stack overflow에서는 `--legacy-peer-deps`가 낫다는 의견이 많은 것 같다. 
-
-개인적으로는 npm 4-6버전과 동일하게 동작한다는 `--legacy-peer-deps`가 나아보인다. --force의 경우 이전 npm 4-6버전에서 동작과 달리 강제로 우회하면서 또 다른 문제가 발생하지 않을까 생각되기 때문이다.
+> 둘 중에 뭐가 나은지는 의견이 분분한데 한국 블로그에선 대부분 `--force`를 사용하고 있고, stack overflow에서는 `--legacy-peer-deps`가 낫다는 의견이 많은 것 같다. 
+> 개인적으로는 npm 4-6버전과 동일하게 동작한다는 `--legacy-peer-deps`가 나아보인다. --force의 경우 이전 npm 4-6버전에서 동작과 달리 강제로 우회하면서 또 다른 문제가 발생하지 않을까 생각되기 때문이다.
 
 🔑 아무튼 `npm install --legacy-peer-deps`로 설치하면 무수한 경고와 함께 설치가 진행된다.
 
@@ -70,4 +65,12 @@ critical하거나 high인 부분도 나온다.
 
 ![](npm%20install%20에러_assets/2024-05-15-02-03-12-image.png)
 
+🔑 이제 해결하기 위해 `npm audit fix`를 실행하면, 
 
+![](npm%20install%20에러(peerDependencies)_assets/2024-05-15-02-15-07-image.png)
+
+🔑 또 에러가 뜨기 시작한다.. 이 에러들을 하나하나 잡는건 너무 많이 시간과 노력이 들 것 같아서(사실 불가능해 보인다) 바로 npm audit을 알려준(위 x 5번째 사진) 메세지에 나와있는 `npm audit fix --force`를 실행했다.
+
+하지만, 아무리 계속해도 취약점이 줄지않았다.. 하지만 이렇게 넘기긴 넘 찝찝해서 더 서칭해봤다.
+
+[npm audit으로 보안취약점을 발견했을 때의 조치 - Never test](https://lovemewithoutall.github.io/it/npm-audit-fix/)
