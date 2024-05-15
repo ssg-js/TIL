@@ -30,9 +30,7 @@
 
 출처 : [npm 7 is now generally available! - The GitHub Blog](https://github.blog/2021-02-02-npm-7-is-now-generally-available/)
 
-위 글을 보면 npm 4-6버전에서는 버전이 맞지 않을 경우 경고
-✏ 일단 npm install 에러 발생 시 --legacy-peer-deps 나 --force 속성을 이용해 설치를 완료하는게 맞는것 같다. 아니면 패키지 매니저를 yarn이나 다른 걸로 바꾸는 것도 해결책이 될 것 같다. 
-만 표기하고 에러 없이 설치했다고 되어있다. 하지만 npm 7버전은 업스트림(?) 종속성 충돌이 발생하면 설치를 차단한다.
+위 글을 보면 npm 4-6버전에서는 버전이 맞지 않을 경우 경고만 표기하고 에러 없이 설치했다고 되어있다. 하지만 npm 7버전은 업스트림(?) 종속성 충돌이 발생하면 설치를 차단한다.
 
 이 문제는 에러 메시지 중후반에 나와있는 `--force` 나 `--legacy-peer-deps` 속성을 이용해 설치하면 해결할 수 있다.
 
@@ -97,3 +95,5 @@ critical하거나 high인 부분도 나온다.
 여기서 hoisting이 발생하면 오른쪽 트리로 바뀌는데, 이 때 원래 package-1에서 의존하지 않는 라이브러리(B)를 require() 하게 된다. 이를 **유령 의존성 (Phantom Dependency)** 라고 한다. (이에 대해서는 이후 글에 적어보겠다!)
 
 이 유령 의존성이 발생하면, package.json에 명시하지 않은 라이브러리를 사용할 수 있게 되고, 다른 의존성을 package.json에서 제거했을 때 그냥 사라지기도 한다. 이런 특성은 예상되지 않는 무수한 상황을 만들어내므로 결코 좋지 않다.
+
+✏ 일단 npm install 에러 발생 시 --legacy-peer-deps 나 --force 속성을 이용해 설치를 완료하는게 맞는것 같다. 아니면 패키지 매니저를 yarn이나 다른 걸로 바꾸는 것도 해결책이 될 것 같다.
