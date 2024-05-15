@@ -4,11 +4,11 @@
 
 오류 메세지는 이렇다.
 
-![](npm%20install%20에러_assets/2024-04-27-00-59-15-image.png)
+![2024-04-27-00-59-15-image](https://github.com/ssg-js/TIL/assets/76690497/443d6292-eb0b-402c-b7ff-daf478dbc043)
 
 해당 오류 정보에서는 msw "1.2.1" 을 설치하는 도중에 typescript 5.1.6 에서 문제가 발생했다고 나와있다.
 
-난 그래서 typescript를 강제로 설치하면 되지 않을까 생각했지만, 그래도 이를 계기로 에러 상황에 대해 공부해보려고 한다.
+난 그래서 typescript를 강제로 설치하면 되지 않을까 생각했지만, 그래도 이를 계기로 에러 상황의 해결법과 원인에 대해 공부해보려고 한다.
 
 📕 이는 2021년 2월 출시된 npm 7버전부터 **peerDependencies를 자동으로 설치하는 기능** 때문이다.
 
@@ -30,7 +30,9 @@
 
 출처 : [npm 7 is now generally available! - The GitHub Blog](https://github.blog/2021-02-02-npm-7-is-now-generally-available/)
 
-위 글을 보면 npm 4-6버전에서는 버전이 맞지 않을 경우 경고만 표기하고 에러 없이 설치했다고 되어있다. 하지만 npm 7버전은 업스트림(?) 종속성 충돌이 발생하면 설치를 차단한다.
+위 글을 보면 npm 4-6버전에서는 버전이 맞지 않을 경우 경고
+✏ 일단 npm install 에러 발생 시 --legacy-peer-deps 나 --force 속성을 이용해 설치를 완료하는게 맞는것 같다. 아니면 패키지 매니저를 yarn이나 다른 걸로 바꾸는 것도 해결책이 될 것 같다. 
+만 표기하고 에러 없이 설치했다고 되어있다. 하지만 npm 7버전은 업스트림(?) 종속성 충돌이 발생하면 설치를 차단한다.
 
 이 문제는 에러 메시지 중후반에 나와있는 `--force` 나 `--legacy-peer-deps` 속성을 이용해 설치하면 해결할 수 있다.
 
@@ -39,11 +41,11 @@
 
 🔑 아무튼 `npm install --legacy-peer-deps`로 설치하면 무수한 경고와 함께 설치가 진행된다.
 
-![](npm%20install%20에러_assets/2024-05-15-01-52-54-image.png)
+![](https://github.com/ssg-js/TIL/assets/76690497/663ce757-f5a5-47f7-9c25-22f1ce15d47b)
 
 그리고 친절하게 현재 단계별 취약점과 해결방법을 알려준다.
 
-![](npm%20install%20에러_assets/2024-05-15-01-54-42-image.png)
+![2024-05-15-01-54-42-image](https://github.com/ssg-js/TIL/assets/76690497/abed303a-1ddb-4646-ba65-07fd05b9b831)
 
 🔑 `npm audit`은 현재 취약한 부분에 대한 정보를 알려준다.
 
@@ -57,20 +59,41 @@
 
 심각도가 적당한 부분도 나오고,
 
-![](npm%20install%20에러_assets/2024-05-15-02-02-18-image.png)
+![2024-05-15-02-02-18-image](https://github.com/ssg-js/TIL/assets/76690497/ceb8e497-7d31-4b01-974d-bbc4a7837b69)
 
 critical하거나 high인 부분도 나온다.
 
-![](npm%20install%20에러_assets/2024-05-15-02-03-00-image.png)
+![2024-05-15-02-03-00-image](https://github.com/ssg-js/TIL/assets/76690497/ba8de28d-70e0-4619-b7bf-a6b90c823ef1)
 
-![](npm%20install%20에러_assets/2024-05-15-02-03-12-image.png)
+![2024-05-15-02-03-12-image](https://github.com/ssg-js/TIL/assets/76690497/1a76948a-5762-4435-93e7-2cb429bf37d5)
 
 🔑 이제 해결하기 위해 `npm audit fix`를 실행하면, 
 
-![](npm%20install%20에러(peerDependencies)_assets/2024-05-15-02-15-07-image.png)
+![2024-05-15-02-15-07-image](https://github.com/ssg-js/TIL/assets/76690497/d150e0bb-4047-42ba-ae6a-2be6d25e9d87)
 
 🔑 또 에러가 뜨기 시작한다.. 이 에러들을 하나하나 잡는건 너무 많이 시간과 노력이 들 것 같아서(사실 불가능해 보인다) 바로 npm audit을 알려준(위 x 5번째 사진) 메세지에 나와있는 `npm audit fix --force`를 실행했다.
 
 하지만, 아무리 계속해도 취약점이 줄지않았다.. 하지만 이렇게 넘기긴 넘 찝찝해서 더 서칭해봤다.
 
-[npm audit으로 보안취약점을 발견했을 때의 조치 - Never test](https://lovemewithoutall.github.io/it/npm-audit-fix/)
+📕 그러다가 발견한 새로운 사실을 npm audit은 devDependencies까지 검사하기 때문에 --production 설정을 이용해 빌드 산출물의 취약점 검사만 진행해도 된다는 것이었다.
+
+> 1. npm audit는 devDependencies의 취약점까지 체크하는데 이는 불필요하다.
+> 2. 실제 빌드 산출물의 취약성을 검사하기 위해서는 devDependencies를 제외하는 옵션을 추가해서 npm audit –production 를 이용하면 된다.
+
+출처 : [npm audit으로 보안취약점을 발견했을 때의 조치 - Never test](https://lovemewithoutall.github.io/it/npm-audit-fix/)
+
+🔑 `npm audit --production`을 입력하니깐 취약점이 0으로 떴다.
+
+![2024-05-15-13-12-45-image](https://github.com/ssg-js/TIL/assets/76690497/83371f3e-bd05-44df-8fe5-c368c5ebf54f)
+
+📕 또 다른 사실을 발견했다. npm의 경우 파일 시스템을 이용해 의존성을 관리하는데 node_modules를 아끼기 위해 hoisting(끌어올리기) 기법을 사용한다.(Yarn v1도!)
+
+![2024-05-15-14-43-45-image](https://github.com/ssg-js/TIL/assets/76690497/87c30d13-5997-4684-90a3-d5f3e5bd0e07)
+
+출처 : [node_modules로부터 우리를 구원해 줄 Yarn Berry](https://toss.tech/article/node-modules-and-yarn-berry)
+
+의존성 트리의 모습이 왼쪽과 같은 경우 A 패키지를 설치하기 위해 B가 설치되고 C패티키를 위해 A, B가 설치되면서 A, B 패키지가 두 번 설치된다.(node_modules가 무거운 이유다..)
+
+여기서 hoisting이 발생하면 오른쪽 트리로 바뀌는데, 이 때 원래 package-1에서 의존하지 않는 라이브러리(B)를 require() 하게 된다. 이를 **유령 의존성 (Phantom Dependency)** 라고 한다. (이에 대해서는 이후 글에 적어보겠다!)
+
+이 유령 의존성이 발생하면, package.json에 명시하지 않은 라이브러리를 사용할 수 있게 되고, 다른 의존성을 package.json에서 제거했을 때 그냥 사라지기도 한다. 이런 특성은 예상되지 않는 무수한 상황을 만들어내므로 결코 좋지 않다.
