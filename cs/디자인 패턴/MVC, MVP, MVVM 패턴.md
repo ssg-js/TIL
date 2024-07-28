@@ -30,7 +30,7 @@
 
 - 대표적인 프레임워크 : Spring WEB MVC
 
-#### MVC 패턴 규칙
+#### ⭐⭐⭐MVC 패턴 규칙⭐⭐⭐
 
 1. Model은 Controller와 View에 의존하지 않아야함 (Model 내부에 Controller와 View에 관련된 코드가 존재 x)
 
@@ -54,15 +54,34 @@
   
   - 애플리케이션이 복잡해질수록 Model과 View의 관계가 복잡해짐
 
-
-
 ## MVP 패턴
 
 - Controller가 Presenter로 교체된 패턴
 
 - View와 Presenter가 1:1 관계라 **MVC보다 더 강한 결합**을 지님
 
+## MVVM 패턴
 
+- MVC에서 Controller가 View Model로 바뀐 패턴
+
+- View Model은 뷰를 **추상화**한 계층이면 VM : V = 1 : N 의 관계
+
+- 대표적인 프레임워크 : Vue.js
+
+#### MVVM 패턴의 특징
+
+- VM은 커맨드와 데이터바인딩을 가짐 (View-VM)
+  
+  - 커맨드 : 여러 요소에 대한 처리를 하나의 액션으로 처리할 수 있는 기법
+  
+  - 데이터바인딩 : 화면에 보인은 데이터와 브라우저 상의 메모리 데이터를 일치시키는 방법
+
+## 차이점 정리
+
+| 특징  | MVC                    | MVP                   | MVVM                   |
+| --- | ---------------------- | --------------------- | ---------------------- |
+| 관계  | C : V = 1: n           | P : V = 1 : 1         | VM : V = 1 : n         |
+| 참조  | view는 controller를 참조 x | view는 presenter를 참조 o | view는 view model을 참조 o |
 
 
 
@@ -71,5 +90,3 @@
 [CS 지식의 정석 | 디자인패턴 네트워크 운영체제 데이터베이스 자료구조 강의 | 큰돌 - 인프런](https://www.inflearn.com/course/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EB%A9%B4%EC%A0%91-cs-%ED%8A%B9%EA%B0%95/dashboard)
 
 [[10분 테코톡] 🧀 제리의 MVC 패턴 - YouTube](https://www.youtube.com/watch?v=ogaXW6KPc8I)
-
-
