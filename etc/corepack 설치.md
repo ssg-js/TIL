@@ -1,4 +1,4 @@
-# corepack 설치
+# corepack 설치(활성화)
 
 💡 node 패키지 매니저로 yarn을 사용하기 위해 [공식문서](https://yarnpkg.com/getting-started/install)를 참고해 설치를 진행하다가, corepack enable에 문제가 있어서 기록해두려고 한다. 공식문서는 global로 yarn을 설치하지 말고 프로젝트에 맞춰 패키지 매니저 버전을 관리하기 위해 corepack을 사용하는 걸 권장한다.
 
@@ -40,20 +40,4 @@
 
 출처 : [How to Solve &quot;File writing permissions blocked by the EPERM&quot; issue in Node.js ? - GeeksforGeeks](https://www.geeksforgeeks.org/how-to-solve-file-writing-permissions-blocked-by-the-eperm-issue-in-node-js/)
 
-(여기서 더하기)
-
-[node.js - nodejs will not enable corepack: operation not permitted - Stack Overflow](https://stackoverflow.com/questions/70577085/nodejs-will-not-enable-corepack-operation-not-permitted)
-
-[GitHub - nodejs/corepack: Zero-runtime-dependency package acting as bridge between Node projects and their package managers](https://github.com/nodejs/corepack#corepack-enable--name)
-
-💡 (문제 상황 or 개요)
-
-📕 (알아본 원인)
-
-> (quote block으로 원문 복사 후 출처 밝히기, 원문 복사 시 원본과 번역본 사이에 (번역) 추가)
-
-출처 : [글 출처](주소)
-
-🔑 (해결방법이나 액션의 결과)
-
-✏ (문제 상황에 대한 최종 해결책 정리 후 마무리)
+✏ 권한 문제이므로 Visual Studio Code를(위의 에러를 발생시킨 CLI창을) 관리자 권한으로  실행시켜서 해결했다. corepack에 대해 더 알고 싶다면 [여기](https://github.com/nodejs/corepack?tab=readme-ov-file#-corepack)를 참고하길 바란다.
